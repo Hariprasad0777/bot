@@ -15,11 +15,28 @@ quotes = [
     "Don't watch the clock; do what it does. Keep going. - Sam Levenson"
 ]
 
-# Streamlit UI
-st.title("💪 Motivational Quotes Bot")
-st.write("Click the button below to get inspired! ✨")
+# Streamlit Chatbot UI
+st.title("💬 Motivational Chatbot")
+st.write("Talk to me! Type your message below and I'll send you a motivational quote. ✨")
 
-# Button to get a new quote
-if st.button("Get a Motivational Quote"):
-    st.write("**💡 Inspiration:**")
-    st.success(random.choice(quotes))
+# Chat history
+if "messages" not in st.session_state:
+    st.session_state.messages = []
+
+# Display previous messages
+for msg in st.session_state.messages:
+    st.write(msg)
+
+# User input
+user_input = st.text_input("You:", "")
+
+if user_input:
+    # Select a random motivational quote
+    bot_reply = random.choice(quotes)
+    
+    # Store chat history
+    st.session_state.messages.append(f"**You:** {user_input}")
+    st.session_state.messages.append(f"**Bot:** {bot_reply}")
+    
+    # Display response
+    st.write(f"**Bot:** {bot_reply}")
